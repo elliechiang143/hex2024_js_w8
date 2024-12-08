@@ -1,5 +1,3 @@
-const apiPath = "ellie2024";
-const token = "hfJtHOPlbRhvrENYbBPc58tKa0D3";
 
 const productDisplayUl = document.querySelector('.productWrap');
 const shoppingCartTable = document.querySelector('.shoppingCart-table tbody');
@@ -11,7 +9,7 @@ const orderInfoBtn = document.querySelector('.orderInfo-btn');
 let productData = [];
 
 function getProductList(){
-  axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${apiPath}/products`)
+  axios.get(`${customerAPI}/products`)
   .then(function(res){
     productData = res.data.products;
     renderProductDisplay(productData);
@@ -72,7 +70,7 @@ function renderProductDisplay(productData){
 let cartData = [];
 // 取得購物車列表
 function getCartList(){
-  axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${apiPath}/carts`)
+  axios.get(`${customerAPI}/carts`)
   .then(function(res){
     cartData = res.data.carts;
     const cartTotalPrice = res.data.finalTotal
@@ -97,7 +95,7 @@ function clearShoppingCart(){
 
 // 加入購物車
 function addShoppingCart(productId){
-  axios.post(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${apiPath}/carts`,
+  axios.post(`${customerAPI}/carts`,
   {
     data: {
       productId: productId,
@@ -159,7 +157,7 @@ function renderCartTotalPrice(totalPrice){
 
 // 刪除購物車單一商品
 function clearCartItem(id){
-  axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${apiPath}/carts/${id}`)
+  axios.delete(`${customerAPI}/carts/${id}`)
   .then(function(res){
     getCartList();
     Swal.fire({
@@ -188,7 +186,7 @@ shoppingCartTable.addEventListener('click', function(e){
 
 // 清除購物車內全部商品
 function clearCart(){
-  axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${apiPath}/carts`)
+  axios.delete(`${customerAPI}/carts`)
   .then(function(res){
     getCartList()
     Swal.fire({
@@ -268,7 +266,7 @@ function submitOrder(){
     }
   }
 
-  axios.post(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${apiPath}/orders`, 
+  axios.post(`${customerAPI}/orders`, 
     orderData
   )
   .then(function(res){
